@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import db from '../db.json';
 import Widget from '../src/components/Widget';
-import QuizLogo from '../src/components/QuizLogo';
 import QuizBackground from '../src/components/QuizBackground';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
@@ -42,7 +41,6 @@ export default function Home() {
       </Head>
       <QuizBackground backgroundImage={db.bg}>
         <QuizContainer>
-          <QuizLogo />
           <Widget>
             <Widget.Header>
               <h1>{db.title}</h1>
@@ -72,10 +70,12 @@ export default function Home() {
           </Widget>
 
           <Widget>
+            <Widget.Header><h1>Quiz da Galera</h1></Widget.Header>
             <Widget.Content>
-              <h1>Quizes da Galera</h1>
-
-              <p>lorem ipsum dolor sit amet...</p>
+              <ul>
+                <li><a href="https://phyton-quiz.vercel.app/">Python Quiz</a></li>
+                <li><a href="https://thequizofcrente.vercel.app/">Quiz of crente</a></li>
+              </ul>
             </Widget.Content>
           </Widget>
           <Footer />
