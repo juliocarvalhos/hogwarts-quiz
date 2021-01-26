@@ -1,12 +1,13 @@
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
+import Link from 'next/link';
 import db from '../db.json';
-import Widget from '../src/components/Widget'
-import QuizLogo from '../src/components/QuizLogo'
-import QuizBackground from '../src/components/QuizBackground'
-import Footer from '../src/components/Footer'
-import GitHubCorner from '../src/components/GitHubCorner'
-import Head from 'next/head'
-import Link from 'next/link'
+import Widget from '../src/components/Widget';
+import QuizLogo from '../src/components/QuizLogo';
+import QuizBackground from '../src/components/QuizBackground';
+import Footer from '../src/components/Footer';
+import GitHubCorner from '../src/components/GitHubCorner';
 
 // const BackgroundImage = styled.div`
 //   background-image: url(${db.bg});
@@ -36,17 +37,17 @@ const Linker = styled.footer`
       opacity: .5;
     }
   }
-`
+`;
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Phyton Quiz</title>
-        <meta property="og:title" content="Phyton Quiz" key="title" />
-        <meta property="og:image" content={db.bg}/>
-        <meta property="og:image:type" content="image/jpg"/>
-      </Head>   
+        <title>{db.title}</title>
+        <meta property="og:title" content="{db.title}" key="title" />
+        <meta property="og:image" content={db.bg} />
+        <meta property="og:image:type" content="image/jpg" />
+      </Head>
       <QuizBackground backgroundImage={db.bg}>
         <QuizContainer>
           <QuizLogo />
@@ -67,7 +68,7 @@ export default function Home() {
           </Widget>
           <Footer />
         </QuizContainer>
-        <GitHubCorner projectUrl="https://github.com/martsallan" />
+        <GitHubCorner projectUrl="https://github.com/juliocarvalhos" />
       </QuizBackground>
     </>
   );
