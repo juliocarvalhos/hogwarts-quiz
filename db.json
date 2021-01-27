@@ -4,25 +4,27 @@
   "description": "Teste os seus conhecimentos sobre a saga Harry Potter e vamos ver se você sabe tudo sobre a Hogwarts.",
   "questions": [
       {
-        "image": "https://media.giphy.com/media/xUOxf3yDKCuwpOlT3i/giphy.gif",
-        "title": "Como fazer um seletor por id via CSS?",
+        "image": "https://media.giphy.com/media/Llzk5TKYvgM1i/giphy.gif",
+        "title": "Qual o nome da acromantula de Hagrid?",
         "description": "Essa é pra aquecer",
         "answer": 2,
         "alternatives": [
-          ".elemento",
-          "*elemento",
-          "#elemento",
-          "%elemento"
+          "Carlos",
+          "Aragorn",
+          "Aragog",
+          "Agarog"
         ]
       },
       {
-        "image": "https://media.giphy.com/media/13FrpeVH09Zrb2/giphy.gif",
-        "title": "Como fazer um background gradiente com css?",
-        "description": "Faz tempo em haha",
+        "image": "https://media.giphy.com/media/pFpzB1pzgxPbO/giphy.gif",
+        "title": "Qual o nome do rato de estimação do rony?",
+        "description": "Sol, margaridas, amarelo maduro...",
         "answer": 0,
         "alternatives": [
-           "background: linear-gradient(#e66465, #9198e5);",
-           "background: gradient(#e66465, #9198e5);"
+           "Perebas",
+           "Sujismundo",
+           "Perebento",
+           "Rabicho"
         ]
       }
     ],
@@ -33,7 +35,7 @@
     "theme": {
       "colors": {
         "primary": "#7f0909",
-        "secondary": "#ffea00",
+        "secondary": "#ffc500",
         "mainBg": "#252525",
         "contrastText": "#FFFFFF",
         "wrong": "#FF5722",

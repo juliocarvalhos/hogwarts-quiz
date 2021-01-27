@@ -18,37 +18,6 @@ const Widget = styled.div`
     font-weight: 400;
     line-height: 1;
   }
-  form {
-    display: flex;
-    flex-direction: column;
-    margin-top: -2rem;
-    padding: 2rem;
-  }
-  form input {
-    padding: 12px;
-    border: 1px solid rgba(255,255,255, .1);
-    border-radius: .2rem;
-    margin-bottom: .5rem;
-    background: transparent;
-    &::placeholder{
-      color: rgba(255,255,255, .4);
-    }
-  }
-  button {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #FFF;
-    padding: .6rem;
-    background: #ffc500;
-    border: none;
-    border-radius: .2rem;
-    transition: all .2s;
-    opacity: 1;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
 `;
 
 Widget.Header = styled.header`
@@ -89,6 +58,24 @@ Widget.Content = styled.div`
       font-weight: 700;
       color: #FFF;
     }
+`;
+
+Widget.Topic = styled.a`
+  outline: 0;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.contrastText};
+  background-color: ${({ theme }) => `${theme.colors.primary}40`};
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  transition: .3s;
+  display: block;
+  
+  &:hover,
+  &:focus {
+    opacity: .5;
+  }
 `;
 
 export default Widget;
