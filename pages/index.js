@@ -20,6 +20,7 @@ export default function Home() {
       <QuizBackground backgroundImage={db.bg}>
         <Head>
           <title>Hogwarts Quiz</title>
+          <link rel="icon" type="image/png" href={db.icon} />
           <meta property="og:title" content="Hogwarts Quiz" key="title" />
           <meta property="og:image" content={db.bg} />
           <meta property="og:image:type" content="image/jpg" />
