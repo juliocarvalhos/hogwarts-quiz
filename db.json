@@ -30,8 +30,9 @@
       }
     ],
     "external": [
-      "https://phyton-quiz.vercel.app/",
-      "https://thequizofcrente.vercel.app/"
+      "https://aluraquiz-world-of-darkness.multiwar.vercel.app/",
+      "https://minequiz.lukeflame.vercel.app/",
+      "https://mgs-quiz.mmazoni.vercel.app/"
     ],
     "theme": {
       "colors": {

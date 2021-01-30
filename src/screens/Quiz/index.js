@@ -1,43 +1,50 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-import Head from 'next/head';
-import ContentLoader from 'react-content-loader';
-import db from '../db.json';
-import Widget from '../src/components/Widget';
-import QuizLogo from '../src/components/QuizLogo';
-import QuizBackground from '../src/components/QuizBackground';
-import QuizContainer from '../src/components/QuizContainer';
-import AlternativesForm from '../src/components/AlternativesForm';
-import Button from '../src/components/Button';
-import GitHubCorner from '../src/components/GitHubCorner';
+import { useRouter } from 'next/router'
+import { Lottie } from '@crello/react-lottie';
+
+import Widget from '../../components/Widget';
+import QuizBackground from '../../components/QuizBackground';
+import QuizContainer from '../../components/QuizContainer';
+import AlternativesForm from '../../components/AlternativesForm';
+import Button from '../../components/Button';
+import BackLinkArrow from '../../components/BackLinkArrow';
+
+import loadingAnimation from './animations/loading.json';
 
 function ResultWidget({ results }) {
+  const router = useRouter()
+  const totalQuestionsCorrect = results.filter((x) => x).length;
+  const playerName = router.query.name;
   return (
     <Widget>
-      <Head><title>Hogwarts Quiz</title></Head>
-
       <Widget.Header>
         Tela de Resultado:
       </Widget.Header>
 
       <Widget.Content>
+      <img
+        alt="Descrição"
+        style={{
+          width: '100%',
+          height: '150px',
+          objectFit: 'cover',
+        }}
+        src="https://media.giphy.com/media/gbErpwcLlizvi/giphy.gif"
+      />
         <p>
+        Olá, {playerName}! <br/>
           Você acertou
           {' '}
-          {/* {results.reduce((somatoriaAtual, resultAtual) => {
-            const isAcerto = resultAtual === true;
-            if (isAcerto) {
-              return somatoriaAtual + 1;
-            }
-            return somatoriaAtual;
-          }, 0)} */}
-          {results.filter((x) => x).length}
+          {totalQuestionsCorrect}
           {' '}
-          perguntas
+          perguntas de 
+          {' '}
+          {results.length}
+          {' '}
         </p>
         <ul>
           {results.map((result, index) => (
-            <li key={`result__${result}`}>
+            <li key={`result__${index}`}>
               #
               {index + 1}
               {' '}
@@ -53,33 +60,24 @@ function ResultWidget({ results }) {
   );
 }
 
-export const Loader = (props) => (
-  <Widget>
-    <Head>
-      <title>Hogwarts Quiz</title>
-      <link rel="icon" type="image/png" href={db.icon} />
-    </Head>
-    <Widget.Header />
-    <ContentLoader
-      speed={2}
-      width={400}
-      height={360}
-      viewBox="0 0 400 360"
-      backgroundColor="rgba(40,40,40,0.2)"
-      foregroundColor="rgba(60,60,60, 0.2)"
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    >
-      <rect x="24" y="71" rx="2" ry="2" width="306" height="13" />
-      <rect x="24" y="28" rx="0" ry="0" width="308" height="39" />
-      <rect x="23" y="92" rx="0" ry="0" width="167" height="13" />
-      <rect x="41" y="120" rx="0" ry="0" width="269" height="44" />
-      <rect x="42" y="171" rx="0" ry="0" width="268" height="42" />
-      <rect x="43" y="286" rx="0" ry="0" width="267" height="44" />
-      <rect x="43" y="221" rx="0" ry="0" width="268" height="42" />
-    </ContentLoader>
-  </Widget>
-);
+function LoadingWidget() {
+  return (
+    <Widget>
+      <Widget.Header>
+        Carregando...
+      </Widget.Header>
+
+      <Widget.Content style={{ display: 'flex', justifyContent: 'center' }}>
+        <Lottie
+          width="200px"
+          height="200px"
+          className="lottie-container basic"
+          config={{ animationData: loadingAnimation, loop: true, autoplay: true }}
+        />
+      </Widget.Content>
+    </Widget>
+  );
+}
 
 function QuestionWidget({
   question,
@@ -93,14 +91,11 @@ function QuestionWidget({
   const questionId = `question__${questionIndex}`;
   const isCorrect = selectedAlternative === question.answer;
   const hasAlternativeSelected = selectedAlternative !== undefined;
+
   return (
     <Widget>
-      <Head>
-        <title>Hogwarts Quiz</title>
-        <link rel="icon" type="image/png" href={db.icon} />
-      </Head>
       <Widget.Header>
-        {/* <BackLinkArrow href="/" /> */}
+        <BackLinkArrow href="/" />
         <h3>
           {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
         </h3>
@@ -124,20 +119,19 @@ function QuestionWidget({
         </p>
 
         <AlternativesForm
-          onSubmit={(e) => {
-            e.preventDefault();
+          onSubmit={(infosDoEvento) => {
+            infosDoEvento.preventDefault();
             setIsQuestionSubmited(true);
             setTimeout(() => {
               addResult(isCorrect);
               onSubmit();
               setIsQuestionSubmited(false);
               setSelectedAlternative(undefined);
-            }, 3 * 500);
+            }, 3 * 1000);
           }}
         >
           {question.alternatives.map((alternative, alternativeIndex) => {
             const alternativeId = `alternative__${alternativeIndex}`;
-            const selectedAlternativeStatus = isQuestionSubmited && isCorrect;
             const alternativeStatus = isCorrect ? 'SUCCESS' : 'ERROR';
             const isSelected = selectedAlternative === alternativeIndex;
             return (
@@ -146,10 +140,10 @@ function QuestionWidget({
                 key={alternativeId}
                 htmlFor={alternativeId}
                 data-selected={isSelected}
-                data-status={selectedAlternativeStatus && alternativeStatus}
+                data-status={isQuestionSubmited && alternativeStatus}
               >
                 <input
-                  // style={{ display: 'none' }}
+                  style={{ display: 'none' }}
                   id={alternativeId}
                   name={questionId}
                   onChange={() => setSelectedAlternative(alternativeIndex)}
@@ -166,8 +160,6 @@ function QuestionWidget({
           <Button type="submit" disabled={!hasAlternativeSelected}>
             Confirmar
           </Button>
-          {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
-          {isQuestionSubmited && !isCorrect && <p>Você errou!</p>}
         </AlternativesForm>
       </Widget.Content>
     </Widget>
@@ -179,16 +171,16 @@ const screenStates = {
   LOADING: 'LOADING',
   RESULT: 'RESULT',
 };
-export default function QuizPage() {
+export default function QuizPage({ externalQuestions, externalBg }) {
   const [screenState, setScreenState] = React.useState(screenStates.LOADING);
   const [results, setResults] = React.useState([]);
-  const totalQuestions = db.questions.length;
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const questionIndex = currentQuestion;
-  const question = db.questions[questionIndex];
+  const question = externalQuestions[questionIndex];
+  const totalQuestions = externalQuestions.length;
+  const bg = externalBg;
 
   function addResult(result) {
-    // results.push(result);
     setResults([
       ...results,
       result,
@@ -203,7 +195,7 @@ export default function QuizPage() {
     // fetch() ...
     setTimeout(() => {
       setScreenState(screenStates.QUIZ);
-    }, 1 * 1000);
+    }, 1 * 2000);
   // nasce === didMount
   }, []);
 
@@ -217,9 +209,8 @@ export default function QuizPage() {
   }
 
   return (
-    <QuizBackground backgroundImage={db.bg}>
+    <QuizBackground backgroundImage={bg}>
       <QuizContainer>
-        <QuizLogo />
         {screenState === screenStates.QUIZ && (
           <QuestionWidget
             question={question}
@@ -230,11 +221,10 @@ export default function QuizPage() {
           />
         )}
 
-        {screenState === screenStates.LOADING && <Loader />}
+        {screenState === screenStates.LOADING && <LoadingWidget />}
 
         {screenState === screenStates.RESULT && <ResultWidget results={results} />}
       </QuizContainer>
-      <GitHubCorner />
     </QuizBackground>
   );
 }

@@ -44,20 +44,6 @@ Widget.Content = styled.div`
     list-style: none;
     padding: 0;
   }
-  li {
-      text-align: center;
-      margin-bottom: 8px;
-      padding: .2rem;
-      border-radius: 2px;
-      background: #ffc500;
-      cursor: pointer;
-    }
-    a {
-      text-decoration: none;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #FFF;
-    }
 `;
 
 Widget.Topic = styled.a`
@@ -75,7 +61,7 @@ Widget.Topic = styled.a`
   &:hover,
   &:focus {
     opacity: .5;
-    ${({ theme }) => `${theme.colors.secondary}40`}
+    
   }
 `;
 
